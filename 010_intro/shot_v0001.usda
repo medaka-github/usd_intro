@@ -1,0 +1,32 @@
+#usda 1.0
+(
+    defaultPrim = "root"
+    endTimeCode = 1
+    framesPerSecond = 24
+    metersPerUnit = 1
+    startTimeCode = 1
+    subLayers = [
+        @./shot.usda@
+    ]
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Xform "root"
+{
+    def Xform "fx"
+    {
+        def Volume "cloud"
+        {
+            custom rel field:surface = </root/fx/cloud/surface>
+
+            def OpenVDBAsset "surface"
+            {
+                int fieldIndex = 0
+                token fieldName = "surface"
+                asset filePath = @./work/v0001/cloud.vdb@
+            }
+        }
+    }
+}
+
