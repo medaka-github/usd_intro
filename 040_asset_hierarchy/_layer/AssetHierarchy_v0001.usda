@@ -1,0 +1,57 @@
+#usda 1.0
+(
+    endTimeCode = 1
+    framesPerSecond = 24
+    metersPerUnit = 0.01
+    startTimeCode = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Xform "root" (
+    kind = "component"
+)
+{
+    def Scope "geo"
+    {
+        def Scope "proxy"
+        {
+        }
+
+        def Scope "render"
+        {
+        }
+    }
+
+    def Scope "mtl"
+    {
+    }
+
+    def Scope "rig"
+    {
+        def Scope "setup"
+        {
+        }
+
+        def Scope "ctrl"
+        {
+        }
+    }
+
+    def Scope "skel"
+    {
+    }
+
+    def Scope "fx"
+    {
+    }
+
+    def Scope "cam"
+    {
+    }
+
+    def Scope "lgt"
+    {
+    }
+}
+
