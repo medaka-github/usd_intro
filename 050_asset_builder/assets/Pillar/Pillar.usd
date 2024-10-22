@@ -1,0 +1,34 @@
+#usda 1.0
+(
+    defaultPrim = "Pillar"
+    endTimeCode = 1
+    framesPerSecond = 24
+    metersPerUnit = 0.01
+    startTimeCode = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Xform "Pillar" (
+    prepend apiSchemas = ["GeomModelAPI"]
+    assetInfo = {
+        asset identifier = @./Pillar.usd@
+        string name = "Pillar"
+    }
+    prepend inherits = </__class__/Pillar>
+    kind = "component"
+    prepend payload = @./payload.usd:SDF_FORMAT_ARGS:format=usda@
+)
+{
+    float3[] extentsHint.timeSamples = {
+        1: [(3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (-88.65349, -723.7011, -88.258156), (77.916046, 6.404646, 91.45085), (-90.76509, -723.23444, -89.80945), (80.737915, 5.674585, 91.3683)],
+    }
+}
+
+class "__class__"
+{
+    class "Pillar"
+    {
+    }
+}
+
