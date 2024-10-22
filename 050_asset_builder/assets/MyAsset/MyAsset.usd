@@ -1,0 +1,32 @@
+#usda 1.0
+(
+    defaultPrim = "MyAsset"
+    endTimeCode = 1
+    framesPerSecond = 24
+    metersPerUnit = 0.01
+    startTimeCode = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Xform "MyAsset" (
+    prepend apiSchemas = ["GeomModelAPI"]
+    assetInfo = {
+        asset identifier = @./MyAsset.usd@
+        string name = "MyAsset"
+    }
+    prepend inherits = </__class__/MyAsset>
+    kind = "component"
+    prepend payload = @./payload.usd:SDF_FORMAT_ARGS:format=usda@
+)
+{
+    float3[] extentsHint = [(3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (-49.607067, 0.25169998, -54.100983), (49.302086, 94.80901, 54.684433), (-49.24566, -0.29367906, -55.365765), (50.231483, 95.88635, 54.175095)]
+}
+
+class "__class__"
+{
+    class "MyAsset"
+    {
+    }
+}
+

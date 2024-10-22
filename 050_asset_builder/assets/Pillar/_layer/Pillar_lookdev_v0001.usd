@@ -1,0 +1,185 @@
+#usda 1.0
+(
+    defaultPrim = "Pillar"
+    endTimeCode = 1
+    framesPerSecond = 24
+    metersPerUnit = 0.01
+    startTimeCode = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+over "Pillar"
+{
+    over "mtl"
+    {
+        over "pillar_proxy_mtl" (
+            prepend inherits = </__class_mtl__/pillar_proxy_mtl>
+        )
+        {
+            token outputs:surface.connect = </Pillar/mtl/pillar_proxy_mtl/usdpreviewsurface.outputs:surface>
+
+            over "usdpreviewsurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoatRoughness = 0
+                color3f inputs:diffuseColor = (0.32856798, 0.47078398, 0.613)
+                float inputs:metallic = 0.084
+            }
+        }
+
+        over "pillar_render_mtx" (
+            prepend inherits = </__class_mtl__/pillar_render_mtx>
+        )
+        {
+            token outputs:mtlx:surface.connect = </Pillar/mtl/pillar_render_mtx/mtlxstandard_surface.outputs:out>
+
+            over "mtlxstandard_surface"
+            {
+                uniform token info:id = "ND_standard_surface_surfaceshader"
+                float inputs:base (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 1
+                            string ogl_diff_intensity = "1"
+                        }
+                    }
+                )
+                color3f inputs:base_color = (0, 0.25, 0.5) (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double3 default_value = (0.8, 0.8, 0.8)
+                            string ogl_diff = "1"
+                        }
+                    }
+                )
+                color3f inputs:base_color.connect = </Pillar/mtl/pillar_render_mtx/mtlximage1.outputs:out>
+                float inputs:coat = 0.867 (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 0
+                            string ogl_coat_intensity = "1"
+                        }
+                    }
+                )
+                float inputs:coat_roughness (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 0.1
+                            string ogl_coat_rough = "1"
+                        }
+                    }
+                )
+                float inputs:diffuse_roughness.connect = </Pillar/mtl/pillar_render_mtx/mtlximage3.outputs:out>
+                float inputs:emission (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 0
+                            string ogl_emit_intensity = "1"
+                        }
+                    }
+                )
+                color3f inputs:emission_color (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double3 default_value = (1, 1, 1)
+                            string ogl_emit = "1"
+                        }
+                    }
+                )
+                float inputs:metalness (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 0
+                            string ogl_metallic = "1"
+                        }
+                    }
+                )
+                float inputs:metalness.connect = </Pillar/mtl/pillar_render_mtx/mtlximage4.outputs:out>
+                float inputs:specular = 0 (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 1
+                            string ogl_spec_intensity = "1"
+                        }
+                    }
+                )
+                color3f inputs:specular_color = (0, 0.5, 0) (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double3 default_value = (1, 1, 1)
+                            string ogl_spec = "1"
+                        }
+                    }
+                )
+                float inputs:specular_IOR (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 1.5
+                            string ogl_ior = "1"
+                        }
+                    }
+                )
+                float inputs:specular_roughness (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 0.2
+                            string ogl_rough = "1"
+                        }
+                    }
+                )
+                float inputs:subsurface = 1
+                color3f inputs:subsurface_color.connect = </Pillar/mtl/pillar_render_mtx/mtlximage1.outputs:out>
+                color3f inputs:subsurface_radius = (0.726, 1, 1)
+                float inputs:subsurface_scale = 10
+                float inputs:transmission (
+                    customData = {
+                        dictionary HoudiniPreviewTags = {
+                            double default_value = 0
+                            string ogl_transparency = "1"
+                        }
+                    }
+                )
+            }
+
+            def Shader "mtlximage1"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @../maps/Pillar_BaseColor_ACEScg.exr@
+                color3f outputs:out
+            }
+
+            def Shader "mtlximage3"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @../maps/Pillar_Roughness_Raw.exr@
+                color3f outputs:out
+            }
+
+            def Shader "mtlximage4"
+            {
+                uniform token info:id = "ND_image_color3"
+                asset inputs:file = @../maps/Pillar_Metallic_Raw.tx@
+                color3f outputs:out
+            }
+        }
+    }
+
+    over "geo"
+    {
+        over "proxy" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Pillar/mtl/pillar_proxy_mtl>
+        }
+
+        over "render" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Pillar/mtl/pillar_render_mtx>
+        }
+    }
+}
+
